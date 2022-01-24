@@ -13,10 +13,10 @@ module.exports = class Ping extends Command {
     static action(message) {
 
         let help = new Discord.RichEmbed()
-            .setTitle ('')
-            .setDescription ('')
+            .setTitle ('test')
+            .setDescription ('test')
             .setColor('')
-            .setFooter('')
+            .setFooter('xova')
 
     message.channel.send(help)
     } 
