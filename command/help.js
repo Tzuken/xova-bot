@@ -15,7 +15,7 @@ module.exports = class Ping extends Command {
         let help = new Discord.RichEmbed()
             .setTitle ('test')
             .setDescription ('test')
-            .setColor('')
+            .setColor('0x206694')
             .setFooter('xova')
 
     message.channel.send(help)
