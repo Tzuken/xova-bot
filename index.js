@@ -1,7 +1,6 @@
 const Discord = require('discord.js')
 
 const Command = requiere('./command/command')
-const Help = requiere('./command/help')
 
 const client = new Discord.Client({ intents: ["GUILDS", "GUILD_MESSAGES"] })
 
