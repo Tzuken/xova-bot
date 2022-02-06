@@ -1,20 +1,47 @@
-const Discord = require('discord.js')
+/** @format */
 
-const client = new Discord.Client({ intents: ["GUILDS", "GUILD_MESSAGES"] })
+console.clear();
 
-const Help = require('./command/help')
+// Require Modules
+const fs = require('fs');
 
-client.once('ready', () =>{
-    console.log('Ready !')
+const Discord = require('discord.js');
+
+const config = require('./config.js');
+
+const intents = new Discord.Intents(32767);
+
+const client = new Discord.Client({ intents: intents });
+
+// Cooldowns
+client.cooldowns = new Discord.Collection();
+
+// Command Handler
+client.commands = new Discord.Collection();
+
+const commandFolders = fs.readdirSync('./commands');
+
+for (const folder of commandFolders) {
+    const commandFiles = fs.readdirSync(`./commands/${folder}`).filter(file => file.endsWith('.js'));
+
+    for (const file of commandFiles) {
+        const command = require(`./commands/${folder}/${file}`);
+        client.commands.set(command.name, command);
+    }
+}
+
+// Event Handler
+fs.readdir("./events/", (error, f) => {
+    if (error) console.error(error);
+
+    f.forEach(f => {
+        const events = require(`./events/${f}`)
+        const event = f.split('.')[0]
+
+        client.on(event, events.bind(null, client));
+    });
 });
 
 
-bot.on('message', function (message) {
- 
-    if (Help.match(message)) {
-        Help.action(message)
-    }
-
-})
-
+// Start Bot
 client.login(process.env.token);
